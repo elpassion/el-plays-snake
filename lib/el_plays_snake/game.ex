@@ -1,6 +1,6 @@
 defmodule ElPlaysSnake.Game do
   @size 16
-  @interval 500
+  @interval 200
 
   defstruct started: false,
             game_over: false,

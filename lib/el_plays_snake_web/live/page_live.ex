@@ -10,24 +10,6 @@ defmodule ElPlaysSnakeWeb.PageLive do
 
   @impl true
   def mount(_params, session, socket) do
-    socket =
-      assign_new(
-        socket,
-        :current_user,
-        fn ->
-          %{
-            name: random_string(8),
-            joined_at: :os.system_time(:seconds)
-          }
-        end
-      )
-
-    {:ok, _} = Presence.track(
-      self(),
-      @presence,
-      socket.assigns.current_user.name,
-      socket.assigns.current_user
-    )
 
     Phoenix.PubSub.subscribe(PubSub, @presence)
 
@@ -42,6 +24,8 @@ defmodule ElPlaysSnakeWeb.PageLive do
       socket
       |> assign(:game, game)
       |> assign(:users, users())
+      |> assign(:current_user, nil)
+      |> assign(:current_user_form, ElPlaysSnake.User.changeset(%ElPlaysSnake.User{}))
       |> assign(:messages, [])
       |> assign(:message, ElPlaysSnake.Message.changeset(%ElPlaysSnake.Message{}))
     }
@@ -57,12 +41,29 @@ defmodule ElPlaysSnakeWeb.PageLive do
     {:noreply, socket}
   end
 
+  def handle_event("name", %{"message" => user_params}, socket) do
+    IO.inspect(user_params)
+    user = ElPlaysSnake.User.changeset(%ElPlaysSnake.User{}, user_params)
+           |> ElPlaysSnake.User.to_user
+
+    socket = assign(socket, :current_user, user)
+
+    {:ok, _} = Presence.track(
+      self(),
+      @presence,
+      socket.assigns.current_user.name,
+      socket.assigns.current_user
+    )
+    {:noreply, socket}
+  end
+
   def handle_event("message", %{"message" => message_params}, socket) do
     message = ElPlaysSnake.Message.changeset(%ElPlaysSnake.Message{}, message_params)
               |> ElPlaysSnake.Message.to_message
 
     ElPlaysSnakeWeb.Endpoint.broadcast_from(self(), "game", "new_message", message)
-    socket = socket |> assign(:messages, [message | socket.assigns.messages])
+    socket = socket
+             |> assign(:messages, [message | socket.assigns.messages])
 
     keys = ["l", "r"]
 
@@ -94,7 +95,8 @@ defmodule ElPlaysSnakeWeb.PageLive do
   end
 
   def handle_info(%{event: "new_message", payload: message}, socket) do
-    socket = socket |> assign(:messages, [message | socket.assigns.messages])
+    socket = socket
+             |> assign(:messages, [message | socket.assigns.messages])
 
     {:noreply, socket}
   end

@@ -7,8 +7,6 @@ defmodule ElPlaysSnake.Application do
 
   def start(_type, _args) do
     children = [
-      # Start the Ecto repository
-      ElPlaysSnake.Repo,
       # Start the Telemetry supervisor
       ElPlaysSnakeWeb.Telemetry,
       # Start the PubSub system

@@ -1,0 +1,5 @@
+<%= form_for @message, "#", [phx_submit: :message], fn _f -> %>
+<%= text_input :message, :text, placeholder: "write your message here..." %>
+<%= hidden_input :message, :author_id, value: @current_user.name  %>
+        <%= submit "submit" %>
+<% end %>

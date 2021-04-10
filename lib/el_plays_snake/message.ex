@@ -17,3 +17,9 @@ defmodule ElPlaysSnake.Message do
     changeset |> apply_changes
   end
 end
+#<%= if is_nil(@current_user) do %>
+#                                <p></p>
+#                                <% else %>
+#                                 <p><%= @current_user.name %></p>
+#
+#                             <% end %>
