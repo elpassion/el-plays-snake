@@ -1,5 +1,8 @@
+<%= if !is_nil(@current_user) do %>
+<div class="game-score">
+  Current score: <%= Enum.count(@game.snake) - 1 %>
+</div>
 <div class="game">
-  <%= if !is_nil(@current_user) do %>
   <div class="game-board">
     <div class="board">
       <%= for x <- 1..16, y <- 1..16 do %>
@@ -40,12 +43,13 @@
         <span><%= message.author_id %></span> - <span><%= message.text %></span></li>
       <% end %>
     </ul>
-    <% else %>
-    <section class="user-form">
-      <%= form_for @current_user, "#", [phx_submit: :name], fn _f -> %>
-      <%= text_input :message, :name, placeholder: "write your name here..." %>
-      <%= submit "submit" %>
-      <% end %>
-    </section>
-    <% end %>
+
   </div>
+  <% else %>
+  <section class="user-form">
+    <%= form_for @current_user, "#", [phx_submit: :name], fn _f -> %>
+    <%= text_input :message, :name, placeholder: "write your name here..." %>
+    <%= submit "submit" %>
+      <% end %>
+  </section>
+        <% end %>
