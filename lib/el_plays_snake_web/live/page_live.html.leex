@@ -3,7 +3,7 @@
   <h1><%= gettext "Welcome to %{name}!", name: "EL PLAYS SNAKE" %></h1>
   <button phx-click="start">start</button>
   <% else %>
-  <div class="game" phx-window-keyup="turn">
+  <div class="game">
     <%= for x <- 1..16, y <- 1..16 do %>
     <% tile = @game.tiles |> Enum.at(x - 1) |> Enum.at(y - 1) %>
 

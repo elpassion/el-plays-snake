@@ -64,7 +64,21 @@ defmodule ElPlaysSnakeWeb.PageLive do
     ElPlaysSnakeWeb.Endpoint.broadcast_from(self(), "game", "new_message", message)
     socket = socket |> assign(:messages, [message | socket.assigns.messages])
 
-    {:noreply, socket}
+    keys = ["l", "r"]
+
+    if (Enum.member?(keys, message.text)) do
+      direction = dir(message.text)
+
+      game = ElPlaysSnake.Game.turn(direction)
+
+      {
+        :noreply,
+        socket
+        |> assign(:game, game)
+      }
+    else
+      {:noreply, socket}
+    end
   end
 
 
@@ -92,21 +106,6 @@ defmodule ElPlaysSnakeWeb.PageLive do
 
   @left_key "l"
   @right_key "r"
-
-  @keys [@left_key, @right_key]
-
-
-  def handle_event("turn", %{"key" => key}, socket) when key in @keys do
-    direction = dir(key)
-
-    game = ElPlaysSnake.Game.turn(direction)
-
-    {
-      :noreply,
-      socket
-      |> assign(:game, game)
-    }
-  end
 
   def handle_event("turn", _, socket) do
     {:noreply, socket}
