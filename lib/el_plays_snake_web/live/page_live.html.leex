@@ -41,7 +41,7 @@
     <ul class="chat-messages" phx-hook="Messages">
       <%= for message <- @messages do %>
       <li>
-        <span><%= message.author_id %></span> - <span><%= message.text %></span></li>
+        <strong><span><%= message.author_id %></strong></span>: <span><%= message.text %></span></li>
       <% end %>
     </ul>
 
