@@ -199,3 +199,12 @@ button {
 .chat-counter {
   margin-left: auto;
 }
+
+.counter {
+  background-image: url("/images/counter.png");
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position: 50% 50%;
+  width: 30px;
+  height: 30px;
+}
