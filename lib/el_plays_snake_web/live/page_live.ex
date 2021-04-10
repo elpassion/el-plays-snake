@@ -65,7 +65,7 @@ defmodule ElPlaysSnakeWeb.PageLive do
     socket = socket
              |> assign(:messages, [message | socket.assigns.messages])
 
-    keys = ["l", "r"]
+    keys = ["a", "d"]
 
     if (Enum.member?(keys, message.text)) do
       direction = dir(message.text)
@@ -106,8 +106,8 @@ defmodule ElPlaysSnakeWeb.PageLive do
     {:noreply, assign(socket, users: users())}
   end
 
-  @left_key "l"
-  @right_key "r"
+  @left_key "a"
+  @right_key "d"
 
   def handle_event("turn", _, socket) do
     {:noreply, socket}

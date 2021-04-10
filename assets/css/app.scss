@@ -12,15 +12,16 @@
   transition: opacity 1s ease-out;
 }
 
-.phx-disconnected{
+.phx-disconnected {
   cursor: wait;
 }
-.phx-disconnected *{
+
+.phx-disconnected * {
   pointer-events: none;
 }
 
 .phx-modal {
-  opacity: 1!important;
+  opacity: 1 !important;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -28,8 +29,8 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .phx-modal-content {
@@ -54,6 +55,9 @@
   cursor: pointer;
 }
 
+form {
+  margin-bottom: 0;
+}
 
 /* Alerts and form errors */
 .alert {
@@ -62,27 +66,33 @@
   border: 1px solid transparent;
   border-radius: 4px;
 }
+
 .alert-info {
   color: #31708f;
   background-color: #d9edf7;
   border-color: #bce8f1;
 }
+
 .alert-warning {
   color: #8a6d3b;
   background-color: #fcf8e3;
   border-color: #faebcc;
 }
+
 .alert-danger {
   color: #a94442;
   background-color: #f2dede;
   border-color: #ebccd1;
 }
+
 .alert p {
   margin-bottom: 0;
 }
+
 .alert:empty {
   display: none;
 }
+
 .invalid-feedback {
   color: #a94442;
   display: block;
@@ -92,11 +102,16 @@
 .board {
   display: grid;
   grid-template-columns: repeat(16, 1fr);
-  grid-gap: 1px;
+  border: 1px solid yellow;
+  border-radius: 10px;
+  overflow: hidden;
 }
+
 .board > * {
-  padding: 1rem;
   background-color: gray;
+  display: flex;
+  flex: 1;
+  width: 100%;
 }
 
 .board > *::before {
@@ -105,24 +120,32 @@
   display: block;
 }
 
-.board > .apple {
+
+.board > .apple > div {
+  margin: 2px;
+  border-radius: 5px;
   background-color: red;
+  width: 100%;
 }
 
-.board > .snake {
+.board > .snake > div {
+  margin: 2px;
+  border-radius: 5px;
   background-color: green;
-
+  width: 100%;
 }
+
 .game {
   display: grid;
   grid-template-columns: 600px 300px;
-  grid-template-rows: minmax(0,800px);
-  grid-gap: 10px;
+  grid-template-rows: minmax(0, 600px);
 }
+
 
 .chat {
   display: flex;
   flex-direction: column;
+  padding: 0 20px;
 }
 
 .chat-messages {
@@ -131,6 +154,7 @@
 
 .chat-message-form {
   margin-top: auto;
+  margin-bottom: 0;
 }
 
 .chat-header {

@@ -6,11 +6,13 @@
       <% tile = @game.tiles |> Enum.at(x - 1) |> Enum.at(y - 1) %>
 
       <%= if tile == :apple do %>
-      <div class="apple"></div>
+      <div class="apple">
+        <div></div>
+      </div>
       <% end %>
 
       <%= if tile == :snake do %>
-      <div class="snake"></div>
+      <div class="snake"><div></div></div>
       <% end %>
 
       <%= if is_nil(tile) do %>
