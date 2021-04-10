@@ -65,10 +65,7 @@ defmodule ElPlaysSnake.Game do
 
   @doc false
   def init(_) do
-    game =
-      %__MODULE__{}
-      |> gen_apple()
-      |> gen_tiles()
+    game = new_game()
 
     Process.send_after(self(), :update, @interval)
 
@@ -155,6 +152,12 @@ defmodule ElPlaysSnake.Game do
     {:reply, game, game}
   end
 
+  def new_game() do
+    %__MODULE__{}
+      |> gen_apple()
+      |> gen_tiles()
+  end
+
   def start(%{started: true} = game), do: game
 
   def start(game) do
@@ -175,8 +178,7 @@ defmodule ElPlaysSnake.Game do
     next = next_pos(game)
 
     if member?(game.snake, next) do
-      game
-      |> Map.put(:game_over, true)
+      new_game()
     else
       game
       |> Map.put(:snake, [next] ++ (game.snake |> drop(-1)))
