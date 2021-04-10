@@ -26,12 +26,7 @@
       <div>Chat</div>
       <div class="chat-counter"><%= Enum.count(@users) %></div>
     </div>
-    <ul class="chat-messages">
-      <%= for message <- Enum.reverse(@messages) do %>
-      <li>
-        <span><%= message.author_id %></span> - <span><%= message.text %></span></li>
-      <% end %>
-    </ul>
+
     <section class="chat-message-form">
       <%= form_for @message, "#", [phx_submit: :message], fn _f -> %>
       <%= text_input :message, :text, placeholder: "write your message here..." %>
@@ -39,6 +34,12 @@
       <%= submit "submit" %>
       <% end %>
     </section>
+    <ul class="chat-messages" phx-hook="Messages">
+      <%= for message <- @messages do %>
+      <li>
+        <span><%= message.author_id %></span> - <span><%= message.text %></span></li>
+      <% end %>
+    </ul>
     <% else %>
     <section class="user-form">
       <%= form_for @current_user, "#", [phx_submit: :name], fn _f -> %>
