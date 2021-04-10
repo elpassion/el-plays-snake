@@ -27,7 +27,7 @@
   <div class="chat">
     <div class="chat-header">
     <div class="green-apple"></div>
-      <div>Chat</div>
+      <div style="padding-top: 12px">Chat</div>
       <div class="chat-counter"><%= Enum.count(@users) %></div>
     </div>
 
@@ -47,10 +47,11 @@
 
   </div>
   <% else %>
+  EL PLAYS SNAKE
   <section class="user-form">
     <%= form_for @current_user, "#", [phx_submit: :name], fn _f -> %>
-    <%= text_input :message, :name, placeholder: "write your name here..." %>
-    <%= submit "submit" %>
+    <%= text_input :message, :name, placeholder: "Enter nickname" %>
+    <%= submit "Play" %>
       <% end %>
   </section>
-        <% end %>
+  <% end %>
