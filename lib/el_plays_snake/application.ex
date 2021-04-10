@@ -15,6 +15,8 @@ defmodule ElPlaysSnake.Application do
       {Phoenix.PubSub, name: ElPlaysSnake.PubSub},
       # Start the Endpoint (http/https)
       ElPlaysSnakeWeb.Endpoint,
+
+      ElPlaysSnake.Presence,
       # Start a worker by calling: ElPlaysSnake.Worker.start_link(arg)
       # {ElPlaysSnake.Worker, arg}
       {ElPlaysSnake.Game, name: ElPlaysSnake.Game}

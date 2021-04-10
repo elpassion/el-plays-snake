@@ -22,3 +22,13 @@
   </div>
   <% end %>
 </section>
+
+<%= if is_nil(@current_user) do %>
+<p></p>
+<% else %>
+<p><%= @current_user.name %></p>
+<p><%= Enum.count(@users) %></p>
+<%= for user <- @users do %>
+  <div><%= user.name %></div>
+<% end %>
+<% end %>
