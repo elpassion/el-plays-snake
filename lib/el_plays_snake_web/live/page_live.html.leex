@@ -23,12 +23,23 @@
   <% end %>
 </section>
 
+<%= form_for @message, "#", [phx_submit: :message], fn _f -> %>
+<%= text_input :message, :text, placeholder: "write your message here..." %>
+<%= hidden_input :message, :author_id, value: @current_user.name  %>
+<%= submit "submit" %>
+<% end %>
+<ul>
+  <%= for message <- Enum.reverse(@messages) do %>
+  <li>
+    <span><%= message.author_id %></span> - <span><%= message.text %></span></li>
+  <% end %>
+</ul>
 <%= if is_nil(@current_user) do %>
 <p></p>
 <% else %>
 <p><%= @current_user.name %></p>
 <p><%= Enum.count(@users) %></p>
 <%= for user <- @users do %>
-  <div><%= user.name %></div>
+<div><%= user.name %></div>
 <% end %>
 <% end %>

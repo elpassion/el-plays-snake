@@ -42,6 +42,8 @@ defmodule ElPlaysSnakeWeb.PageLive do
       socket
       |> assign(:game, game)
       |> assign(:users, users())
+      |> assign(:messages, [])
+      |> assign(:message, ElPlaysSnake.Message.changeset(%ElPlaysSnake.Message{}))
     }
   end
 
@@ -55,9 +57,31 @@ defmodule ElPlaysSnakeWeb.PageLive do
     {:noreply, socket}
   end
 
+  def handle_event("message", %{"message" => message_params}, socket) do
+    message = ElPlaysSnake.Message.changeset(%ElPlaysSnake.Message{}, message_params)
+              |> ElPlaysSnake.Message.to_message
+
+    ElPlaysSnakeWeb.Endpoint.broadcast_from(self(), "game", "new_message", message)
+    socket = socket |> assign(:messages, [message | socket.assigns.messages])
+
+    {:noreply, socket}
+  end
+
+
+  def handle_info(%{event: "message", payload: state}, socket) do
+    {:noreply, assign(socket, state)}
+  end
+
+
   def handle_info(%{event: "update", payload: game}, socket) do
     socket = socket
              |> assign(:game, game)
+    {:noreply, socket}
+  end
+
+  def handle_info(%{event: "new_message", payload: message}, socket) do
+    socket = socket |> assign(:messages, [message | socket.assigns.messages])
+
     {:noreply, socket}
   end
 
