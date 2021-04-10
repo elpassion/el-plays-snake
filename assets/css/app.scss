@@ -99,6 +99,19 @@ form {
   margin: -1rem 0 2rem;
 }
 
+html {
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
 .board {
   display: grid;
   grid-template-columns: repeat(16, 1fr);
