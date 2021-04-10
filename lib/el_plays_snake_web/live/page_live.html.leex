@@ -23,13 +23,14 @@
   </div>
   <div class="chat">
     <div class="chat-header">
+    <div class="green-apple"></div>
       <div>Chat</div>
       <div class="chat-counter"><%= Enum.count(@users) %></div>
     </div>
     <ul class="chat-messages">
       <%= for message <- Enum.reverse(@messages) do %>
       <li>
-        <span><%= message.author_id %></span> - <span><%= message.text %></span></li>
+        <span><%= message.author_id %></span> : <span><%= message.text %></span></li>
       <% end %>
     </ul>
     <section class="chat-message-form">
