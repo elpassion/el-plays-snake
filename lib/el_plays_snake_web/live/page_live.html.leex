@@ -1,5 +1,8 @@
+<%= if !is_nil(@current_user) do %>
+<div class="game-score">
+  Current score: <%= Enum.count(@game.snake) - 1 %>
+</div>
 <div class="game">
-  <%= if !is_nil(@current_user) do %>
   <div class="game-board">
     <div class="board">
       <%= for x <- 1..16, y <- 1..16 do %>
@@ -27,12 +30,7 @@
       <div>Chat</div>
       <div class="chat-counter"><%= Enum.count(@users) %></div>
     </div>
-    <ul class="chat-messages">
-      <%= for message <- Enum.reverse(@messages) do %>
-      <li>
-        <span><%= message.author_id %></span> : <span><%= message.text %></span></li>
-      <% end %>
-    </ul>
+
     <section class="chat-message-form">
       <%= form_for @message, "#", [phx_submit: :message], fn _f -> %>
       <%= text_input :message, :text, placeholder: "write your message here..." %>
@@ -40,12 +38,19 @@
       <%= submit "submit" %>
       <% end %>
     </section>
-    <% else %>
-    <section class="user-form">
-      <%= form_for @current_user, "#", [phx_submit: :name], fn _f -> %>
-      <%= text_input :message, :name, placeholder: "write your name here..." %>
-      <%= submit "submit" %>
+    <ul class="chat-messages" phx-hook="Messages">
+      <%= for message <- @messages do %>
+      <li>
+        <span><%= message.author_id %></span> - <span><%= message.text %></span></li>
       <% end %>
-    </section>
-    <% end %>
+    </ul>
+
   </div>
+  <% else %>
+  <section class="user-form">
+    <%= form_for @current_user, "#", [phx_submit: :name], fn _f -> %>
+    <%= text_input :message, :name, placeholder: "write your name here..." %>
+    <%= submit "submit" %>
+      <% end %>
+  </section>
+        <% end %>
